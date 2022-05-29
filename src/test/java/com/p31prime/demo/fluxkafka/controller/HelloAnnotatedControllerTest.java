@@ -5,10 +5,13 @@ import com.p31prime.demo.fluxkafka.model.HelloRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
+import reactor.core.publisher.Mono;
 
-@WebFluxTest
-public class HelloWorldController {
+@WebFluxTest()
+public class HelloAnnotatedControllerTest {
 
     @Autowired
     WebTestClient testClient;
@@ -18,10 +21,14 @@ public class HelloWorldController {
 
         HelloRequest helloRequest = new HelloRequest("How are you?");
 
-        testClient.put()
-                .uri("/sayhello")
-                .bodyValue(helloRequest)
-                .exchange()
-                .expectStatus().is2xxSuccessful();
+        testClient.post()
+                    .uri("/api/sayhello")
+                    .bodyValue(helloRequest)
+                    .exchange()
+                    .expectStatus().is2xxSuccessful();
     }
+
+
+
+
 }
